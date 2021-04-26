@@ -1,6 +1,16 @@
 import React from 'react'
 import Link from 'next/link'
 import Web3Container from '../lib/Web3Container'
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+}));
 
 class Dapp extends React.Component {
   state = {
@@ -31,21 +41,32 @@ class Dapp extends React.Component {
     return (
       <div>
         <h1>My Dapp</h1>
-
-        <button onClick={this.storeValue}>Store 5 into account balance</button>
-        <button onClick={this.getValue}>Get account balance</button>
-        <button onClick={this.getEthBalance}>Get ether balance</button>
+        <div>
+        <Button onClick={this.storeValue} size="small" variant="contained" color="primary">
+        Store 5 into account balance
+        </Button>
+        </div>
+        <div>
+        <Button onClick={this.getValue} size="small" variant="contained" color="primary">
+        Get account balance
+        </Button>
+        </div>
+        <div>
+        <Button onClick={this.getEthBalance} size="small" variant="contained" color="primary">
+        Get ether balance
+        </Button>
+        </div>
         <div>Account Balance: {balance}</div>
         <div>Ether Balance: {ethBalance}</div>
         <div>
-          <Link href='/accounts'>
-            <a>My Accounts</a>
-          </Link>
+        <Button variant="contained" color="primary" size="small">
+      <Link href="/accounts"><a style={{textDecoration:"none", color:"white"}}>My Accounts</a></Link>
+      </Button>
         </div>
         <div>
-          <Link href='/'>
-            <a>Home</a>
-          </Link>
+        <Button variant="contained" color="primary" size="small">
+      <Link href="/"><a style={{textDecoration:"none", color:"white"}}>Home</a></Link>
+      </Button>
         </div>
       </div>
     )
