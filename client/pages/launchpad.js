@@ -30,25 +30,29 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
 export default function launchpad() {
   const classes = useStyles();
-  const [name, setName] = React.useState("");
   const [address, setAddress] = React.useState("");
+  const [title, setTitle] = React.useState("");
+  const [price, setPrice] = React.useState("");
+  const [burnAddress, setburnAddress] = React.useState("");
+  const [softCap, setSoftCap] = React.useState("");
+  const [hardCap, setHardCap] = React.useState("");
+  const [minInvestment, setMinInvestment] = React.useState("");
+  const [maxInvestment, setMaxInvestment] = React.useState("");
+  const [startingDate, setStartingDate] = React.useState("");
+  const [closingDate, setClosingDate] = React.useState("");
 
-  const handleChange = (event) => {
-    setName(event.target.value);
-  };
+  console.log(minInvestment);
+
   const handleSubmit = (event) => {
-    console.log(event.target.value);
+    alert("Data:", event);
   };
-
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
     // Update the document title using the browser API
     // document.title = `You clicked ${count} times`;
   });
-
   return (
     <div className={classes.root}>
       <Container>
@@ -60,41 +64,45 @@ export default function launchpad() {
         </h1>
         <Paper elevation={3} style={{ margin: 40 }}>
           <Container>
-            <h2>Sale Details</h2>
-            <p>(Fields marked with * are required</p>
+            <h2>*Please Read*</h2>
+            <p>Fields marked with * are required</p>
             <p>Dev fee: 3% of raised ETH & raised Tokens.</p>
           </Container>
           <Divider />
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={(e) => handleSubmit(e)}>
             <Container>
               <Grid container spacing={7} display="flex" alignItems="center">
                 <Grid item xs={12} sm={6}>
                   <h3>* ERC20 Token Address</h3>
-                  <TextField
+                  <input
                     required
+                    style={{ height: 30, width: "100%" }}
                     onChange={(e) => setAddress(e.target.value)}
-                    id="outlined-basic"
-                    variant="filled"
-                    label="Token Address"
+                    id="Price"
+                    type="text"
+                    maxlength="42"
+                    pattern="^0x[a-fA-F0-9]{40}$"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <h3>Sale Title</h3>
-                  <TextField
-                    onChange={handleChange}
-                    id="outlined-basic"
-                    variant="filled"
-                    label="Sale Title"
+                  <input
+                    style={{ height: 30, width: "60%" }}
+                    onChange={(e) => setTitle(e.target.value)}
+                    id="Title"
+                    type="text"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <h3>* Token Price (ETH)</h3>
-                  <TextField
-                    onChange={handleChange}
-                    id="outlined-basic"
-                    variant="filled"
-                    label="Token Price"
+                  <input
+                    required
+                    style={{ height: 30 }}
+                    onChange={(e) => setPrice(e.target.value)}
+                    id="Price"
                     type="number"
+                    min={0}
+                    step="0.1"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -102,91 +110,110 @@ export default function launchpad() {
                     Address where UNSOLD TOKENS will be transferred to (burn
                     address by default)
                   </h4>
-                  <TextField
-                    onChange={handleChange}
-                    id="outlined-basic"
-                    variant="filled"
-                    label="0x000000...dEaD"
+                  <input
+                    style={{ height: 30, width: "100%" }}
+                    onChange={(e) => setburnAddress(e.target.value)}
+                    id="Burn Address"
+                    type="text"
+                    maxlength="42"
+                    placeholder="0x00000000000000000000000000000000000dEaD"
+                    pattern="^0x[a-fA-F0-9]{40}$"
                   />
-                  {/* <p>Unsold tokens will be sent to burn address by default</p> */}
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <h3>* Soft Cap (ETH)</h3>
-                  <TextField
-                    onChange={handleChange}
-                    id="outlined-basic"
-                    variant="filled"
-                    label="Soft Cap"
+                  <input
+                    required
+                    style={{ height: 30 }}
+                    onChange={(e) => setSoftCap(e.target.value)}
+                    id="SoftCap"
                     type="number"
+                    min={0}
+                    step="0.01"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <h3>* Hard Cap (ETH)</h3>
-                  <TextField
-                    onChange={handleChange}
-                    id="outlined-basic"
-                    variant="filled"
-                    label="Hard Cap"
+                  <input
+                    required
+                    style={{ height: 30 }}
+                    onChange={(e) => setHardCap(e.target.value)}
+                    id="HardCap"
                     type="number"
+                    min={0}
+                    step="0.01"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <h3>Min. Investment per Wallet (ETH)</h3>
-                  <TextField
-                    onChange={handleChange}
-                    id="outlined-basic"
-                    variant="filled"
-                    label="Min. Investment"
+                  <input
+                    style={{ height: 30 }}
+                    onChange={(e) => setMinInvestment(e.target.value)}
+                    id="MinInvestment"
                     type="number"
+                    min={0}
+                    step="0.001"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <h3>Max. Investment per Wallet (ETH)</h3>
-                  <TextField
-                    onChange={handleChange}
-                    id="outlined-basic"
-                    variant="filled"
-                    label="Max. Investment"
+                  <input
+                    style={{ height: 30 }}
+                    onChange={(e) => setMaxInvestment(e.target.value)}
+                    id="MaxInvestment"
                     type="number"
+                    min={0}
+                    step="0.001"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <h3>* Opens at</h3>
-                  <TextField
-                    onChange={handleChange}
-                    id="outlined-basic"
-                    variant="filled"
+                  <input
+                    required
+                    style={{ height: 40 }}
+                    onChange={(e) => setStartingDate(e.target.value)}
+                    id="Starting Date"
                     type="datetime-local"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <h3>* Closes at</h3>
-                  <TextField
-                    onChange={handleChange}
-                    id="outlined-basic"
-                    variant="filled"
+                  <input
+                    required
+                    style={{ height: 40 }}
+                    onChange={(e) => setClosingDate(e.target.value)}
+                    id="Closing Date"
                     type="datetime-local"
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <h2>Whitelist</h2>
-                  <Divider/>
+                  <Divider />
                   <h3>Whitelisted Addresses (Comma-separated)</h3>
                   <p>example:</p>
-                  <p>0x9cc3C87978..,</p>
-                  <p>0xcF7d623d92..,</p>
-                  <p>0x3f5ce5fb63..,</p>
+                  <p>0x94gsl87978..,</p>
+                  <p>0x4F7d6gf292..,</p>
+                  <p>0xfsf5fb6363..,</p>
                   <Grid item sm={9} xs={12}>
-                  <TextField
-                    multiline
-                    rows={4}
-                    onChange={handleChange}
-                    id="outlined-basic"
-                    variant="filled"
-                  />
+                    <TextField
+                      multiline
+                      rows={4}
+                      id="outlined-basic"
+                      variant="filled"
+                    />
+                    <p>Skip if there is no whitelist</p>
                   </Grid>
                 </Grid>
               </Grid>
+              <Button
+                style={{ margin: "30px auto", width: "100%" }}
+                color="primary"
+                type="submit"
+                variant="contained"
+                size="large"
+              >
+                Submit Smart Contract
+              </Button>
             </Container>
           </form>
         </Paper>
