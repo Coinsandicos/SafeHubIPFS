@@ -32,10 +32,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function launchpad() {
   const classes = useStyles();
-  const [address, setAddress] = React.useState("");
-  const [title, setTitle] = React.useState("");
-  const [price, setPrice] = React.useState("");
-  const [burnAddress, setburnAddress] = React.useState("");
+  const [address, setAddress] = useState("");
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [burnAddress, setburnAddress] = useState("");
   const [softCap, setSoftCap] = React.useState("");
   const [hardCap, setHardCap] = React.useState("");
   const [minInvestment, setMinInvestment] = React.useState("");
@@ -43,16 +43,18 @@ export default function launchpad() {
   const [startingDate, setStartingDate] = React.useState("");
   const [closingDate, setClosingDate] = React.useState("");
 
-  console.log(minInvestment);
-
-  const handleSubmit = (event) => {
-    alert("Data:", event);
-  };
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
     // Update the document title using the browser API
     // document.title = `You clicked ${count} times`;
   });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Data:", e);
+    console.table(["***title***:", title, "***address***:", address]);
+  };
+
   return (
     <div className={classes.root}>
       <Container>
@@ -80,17 +82,20 @@ export default function launchpad() {
                     onChange={(e) => setAddress(e.target.value)}
                     id="Price"
                     type="text"
-                    maxlength="42"
+                    maxLength="42"
                     pattern="^0x[a-fA-F0-9]{40}$"
+                    // value="0x9cc3C8797863076EaCbB5Af775651407F7FD6122"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <h3>Sale Title</h3>
                   <input
+                    required
                     style={{ height: 30, width: "60%" }}
                     onChange={(e) => setTitle(e.target.value)}
                     id="Title"
                     type="text"
+                    // value=""
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -103,6 +108,7 @@ export default function launchpad() {
                     type="number"
                     min={0}
                     step="0.1"
+                    value={1000}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -115,7 +121,7 @@ export default function launchpad() {
                     onChange={(e) => setburnAddress(e.target.value)}
                     id="Burn Address"
                     type="text"
-                    maxlength="42"
+                    maxLength="42"
                     placeholder="0x00000000000000000000000000000000000dEaD"
                     pattern="^0x[a-fA-F0-9]{40}$"
                   />
@@ -130,6 +136,7 @@ export default function launchpad() {
                     type="number"
                     min={0}
                     step="0.01"
+                    value={100}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -142,6 +149,7 @@ export default function launchpad() {
                     type="number"
                     min={0}
                     step="0.01"
+                    value={500}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -169,7 +177,7 @@ export default function launchpad() {
                 <Grid item xs={12} sm={6}>
                   <h3>* Opens at</h3>
                   <input
-                    required
+                    // required
                     style={{ height: 40 }}
                     onChange={(e) => setStartingDate(e.target.value)}
                     id="Starting Date"
@@ -179,7 +187,7 @@ export default function launchpad() {
                 <Grid item xs={12} sm={6}>
                   <h3>* Closes at</h3>
                   <input
-                    required
+                    // required
                     style={{ height: 40 }}
                     onChange={(e) => setClosingDate(e.target.value)}
                     id="Closing Date"
