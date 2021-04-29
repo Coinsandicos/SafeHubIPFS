@@ -15,6 +15,9 @@ import {
   Grid,
   Divider,
 } from "@material-ui/core";
+import getWeb3 from '../lib/getWeb3'
+import getContract from '../lib/getContract'
+import contractDefinition from '../lib/contracts/SimpleStorage.json'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function launchpad() {
   const classes = useStyles();
+  const [web3, setWeb3] = useState(null);
+  const [accounts, setAccounts] = useState(null);
+  const [contract, setContract] = useState(null);
   const [address, setAddress] = useState("");
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
@@ -42,18 +48,52 @@ export default function launchpad() {
   const [maxInvestment, setMaxInvestment] = React.useState("");
   const [startingDate, setStartingDate] = React.useState("");
   const [closingDate, setClosingDate] = React.useState("");
+  const [ethBalance, setEthBalance] = React.useState("");
+
+//   const myContract = new web3.eth.Contract([...], '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe', {
+//     from: '0xfaf0c3b3a34332264386813aac334bdb58f1ba12', // default from address
+//     gasPrice: '20000000000' // default gas price in wei, 20 gwei in this case
+// });
 
   // Similar to componentDidMount and componentDidUpdate:
-  useEffect(() => {
+  useEffect(async () => {
     // Update the document title using the browser API
     // document.title = `You clicked ${count} times`;
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Data:", e);
     console.table(["***title***:", title, "***address***:", address]);
-  };
+
+    try {
+      const web3 = await getWeb3()
+      const accounts = await web3.eth.getAccounts()
+      const contract = await getContract(web3, contractDefinition)
+      // web3.eth.defaultAccount = '0xfaf0c3b3a34332264386813aac334bdb58f1ba12'
+      setWeb3(web3)
+      setAccounts(accounts)
+      setContract(contract)
+      console.log(web3)
+      console.log(accounts)
+
+      web3.eth.getBalance('0xfaf0c3b3a34332264386813aac334bdb58f1ba12',function(error,result){
+
+        if(error){
+           console.log(error)
+        }
+        else{
+           setEthBalance(result)
+          //  console.log(result)
+        }
+     })
+    } catch (error) {
+      alert(
+        `Failed to load web3, accounts, or contract. Check console for details.`
+      )
+      console.log(error)
+    }
+};
 
   return (
     <div className={classes.root}>
@@ -64,6 +104,7 @@ export default function launchpad() {
         >
           Launchpad
         </h1>
+        <h2>Balance - {ethBalance} </h2>
         <Paper elevation={3} style={{ margin: 40 }}>
           <Container>
             <h2>*Please Read*</h2>
@@ -95,7 +136,7 @@ export default function launchpad() {
                     onChange={(e) => setTitle(e.target.value)}
                     id="Title"
                     type="text"
-                    // value=""
+                    value="SImdaq"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
