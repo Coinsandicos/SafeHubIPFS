@@ -18,6 +18,13 @@ import {
 import getWeb3 from '../lib/getWeb3'
 import getContract from '../lib/getContract'
 import contractDefinition from '../lib/contracts/SimpleStorage.json'
+import TestTokenContractDefinition from '../lib/contracts/TestToken.json'
+
+const chai = require('chai');
+const BN = require('bn.js');
+
+// Enable and inject BN dependency
+chai.use(require('chai-bn')(BN));
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,7 +55,7 @@ export default function launchpad() {
   const [maxInvestment, setMaxInvestment] = React.useState("");
   const [startingDate, setStartingDate] = React.useState("");
   const [closingDate, setClosingDate] = React.useState("");
-  const [ethBalance, setEthBalance] = React.useState("");
+  const [ethBalance, setEthBalance] = React.useState('');
 
 //   const myContract = new web3.eth.Contract([...], '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe', {
 //     from: '0xfaf0c3b3a34332264386813aac334bdb58f1ba12', // default from address
@@ -70,12 +77,17 @@ export default function launchpad() {
       const web3 = await getWeb3()
       const accounts = await web3.eth.getAccounts()
       const contract = await getContract(web3, contractDefinition)
+      const data = await web3.eth
+      const DeployToken = new web3.eth.Contract([TestTokenContractDefinition], '0xfAF0c3B3a34332264386813AAC334bDB58F1ba12', {
+        gasPrice: '20000000000' // default gas price in wei, 20 gwei in this case
+    });
       // web3.eth.defaultAccount = '0xfaf0c3b3a34332264386813aac334bdb58f1ba12'
       setWeb3(web3)
       setAccounts(accounts)
       setContract(contract)
-      console.log(web3)
-      console.log(accounts)
+      // console.log("Data!",data)
+      // console.log(accounts)
+      // console.log(contract)
 
       web3.eth.getBalance('0xfaf0c3b3a34332264386813aac334bdb58f1ba12',function(error,result){
 
@@ -125,7 +137,7 @@ export default function launchpad() {
                     type="text"
                     maxLength="42"
                     pattern="^0x[a-fA-F0-9]{40}$"
-                    // value="0x9cc3C8797863076EaCbB5Af775651407F7FD6122"
+                    value="0x9cc3C8797863076EaCbB5Af775651407F7FD6122"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
