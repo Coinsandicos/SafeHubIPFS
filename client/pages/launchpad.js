@@ -88,28 +88,24 @@ export default function launchpad() {
       // console.log("Data!",data)
       // console.log(accounts)
       // console.log(contract)
-
-    //   // using the callback
-    // web3.eth.sendTransaction({
-    // from: `${accounts}`,
-    // data: TestTokenContractDefinition.abi, // deploying a contracrt
-    // gasPrice:'200000000000'
-    // }, function(error, hash){
-    //   console.log(hash)
-    // });
       
 
-      web3.eth.sendTransaction({
-        from: `${accounts}`,
-        to: `0xE09B9154dDA29d69f8FC3F2C289B453dD846f16f`,
-        value: '1000000000000000000',
-        gasPrice:'20000000000',
-        // nonce: "5",
-        // chain: '5778'
-        })
-      .then(function(receipt){
-        console.log(receipt)
-      });
+      // web3.eth.sendTransaction({
+      //   from: `${accounts}`,
+      //   to: `0xE09B9154dDA29d69f8FC3F2C289B453dD846f16f`,
+      //   value: '1000000000000000000',
+      //   gasPrice:'20000000000',
+      //   // nonce: "5",
+      //   // chain: '5778'
+      //   })
+      // .then(function(receipt){
+      //   console.log(receipt)
+      // });
+
+      var myContract = new web3.eth.Contract([...], '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe', {
+        from: '0x1234567890123456789012345678901234567891', // default from address
+        gasPrice: '20000000000' // default gas price in wei, 20 gwei in this case
+    });
 
 
       web3.eth.getBalance(`${accounts}`,function(error,result){
