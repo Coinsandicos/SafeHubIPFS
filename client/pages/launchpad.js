@@ -15,16 +15,16 @@ import {
   Grid,
   Divider,
 } from "@material-ui/core";
-import getWeb3 from '../lib/getWeb3'
-import getContract from '../lib/getContract'
-import contractDefinition from '../lib/contracts/SimpleStorage.json'
-import TestTokenContractDefinition from '../lib/contracts/TestToken.json'
+import getWeb3 from "../lib/getWeb3";
+import getContract from "../lib/getContract";
+import contractDefinition from "../lib/contracts/SimpleStorage.json";
+import PresaleContractDefinition from "../lib/contracts/SafeHubPresale.json";
 
-const chai = require('chai');
-const BN = require('bn.js');
+const chai = require("chai");
+const BN = require("bn.js");
 
 // Enable and inject BN dependency
-chai.use(require('chai-bn')(BN));
+chai.use(require("chai-bn")(BN));
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,12 +55,12 @@ export default function launchpad() {
   const [maxInvestment, setMaxInvestment] = React.useState("");
   const [startingDate, setStartingDate] = React.useState("");
   const [closingDate, setClosingDate] = React.useState("");
-  const [ethBalance, setEthBalance] = React.useState('');
+  const [ethBalance, setEthBalance] = React.useState("");
 
-//   const myContract = new web3.eth.Contract([...], '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe', {
-//     from: '0xfaf0c3b3a34332264386813aac334bdb58f1ba12', // default from address
-//     gasPrice: '20000000000' // default gas price in wei, 20 gwei in this case
-// });
+  //   const myContract = new web3.eth.Contract([...], '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe', {
+  //     from: '0xfaf0c3b3a34332264386813aac334bdb58f1ba12', // default from address
+  //     gasPrice: '20000000000' // default gas price in wei, 20 gwei in this case
+  // });
 
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(async () => {
@@ -70,29 +70,42 @@ export default function launchpad() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Data:", e);
-    console.table(["***title***:", title, "***address***:", address]);
+    // console.log("Data:", e);
+    // console.table(["***title***:", title, "***address***:", address]);
 
     try {
-      const web3 = await getWeb3()
-      const accounts = await web3.eth.getAccounts()
-      const contract = await getContract(web3, contractDefinition)
-      const data = await web3.eth
-      const DeployToken = new web3.eth.Contract([TestTokenContractDefinition], '0xfAF0c3B3a34332264386813AAC334bDB58F1ba12', {
-        gasPrice: '20000000000' // default gas price in wei, 20 gwei in this case
-    });
+      const web3 = await getWeb3();
+      const accounts = await web3.eth.getAccounts();
+      const contract = await getContract(web3, contractDefinition);
       // web3.eth.defaultAccount = '0xfaf0c3b3a34332264386813aac334bdb58f1ba12'
-      setWeb3(web3)
-      setAccounts(accounts)
-      setContract(contract)
+      setWeb3(web3);
+      setAccounts(accounts);
+      setContract(contract);
       // console.log("Data!",data)
       // console.log(accounts)
-      // console.log(contract)
-      
+
+      new web3.eth.Contract([contractDefinition], `${accounts}`, {
+        from: `${accounts}`,
+        gasPrice: "20000000000",
+        data: {
+          generatedSources: [],
+          linkReferences: {},
+          object:
+            "608060405234801561001057600080fd5b5061012f806100206000396000f3fe6080604052348015600f57600080fd5b506004361060325760003560e01c80632e64cec11460375780636057361d146051575b600080fd5b603d6069565b6040516048919060c2565b60405180910390f35b6067600480360381019060639190608f565b6072565b005b60008054905090565b8060008190555050565b60008135905060898160e5565b92915050565b60006020828403121560a057600080fd5b600060ac84828501607c565b91505092915050565b60bc8160db565b82525050565b600060208201905060d5600083018460b5565b92915050565b6000819050919050565b60ec8160db565b811460f657600080fd5b5056fea26469706673582212209ea413b32307fdcb80151d5cfa7449ee6ce6fd9f0b5a5cae9cbe9fe3944f97ef64736f6c63430008040033",
+          opcodes:
+            "PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x12F DUP1 PUSH2 0x20 PUSH1 0x0 CODECOPY PUSH1 0x0 RETURN INVALID PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH1 0xF JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x4 CALLDATASIZE LT PUSH1 0x32 JUMPI PUSH1 0x0 CALLDATALOAD PUSH1 0xE0 SHR DUP1 PUSH4 0x2E64CEC1 EQ PUSH1 0x37 JUMPI DUP1 PUSH4 0x6057361D EQ PUSH1 0x51 JUMPI JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x3D PUSH1 0x69 JUMP JUMPDEST PUSH1 0x40 MLOAD PUSH1 0x48 SWAP2 SWAP1 PUSH1 0xC2 JUMP JUMPDEST PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 RETURN JUMPDEST PUSH1 0x67 PUSH1 0x4 DUP1 CALLDATASIZE SUB DUP2 ADD SWAP1 PUSH1 0x63 SWAP2 SWAP1 PUSH1 0x8F JUMP JUMPDEST PUSH1 0x72 JUMP JUMPDEST STOP JUMPDEST PUSH1 0x0 DUP1 SLOAD SWAP1 POP SWAP1 JUMP JUMPDEST DUP1 PUSH1 0x0 DUP2 SWAP1 SSTORE POP POP JUMP JUMPDEST PUSH1 0x0 DUP2 CALLDATALOAD SWAP1 POP PUSH1 0x89 DUP2 PUSH1 0xE5 JUMP JUMPDEST SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x0 PUSH1 0x20 DUP3 DUP5 SUB SLT ISZERO PUSH1 0xA0 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x0 PUSH1 0xAC DUP5 DUP3 DUP6 ADD PUSH1 0x7C JUMP JUMPDEST SWAP2 POP POP SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0xBC DUP2 PUSH1 0xDB JUMP JUMPDEST DUP3 MSTORE POP POP JUMP JUMPDEST PUSH1 0x0 PUSH1 0x20 DUP3 ADD SWAP1 POP PUSH1 0xD5 PUSH1 0x0 DUP4 ADD DUP5 PUSH1 0xB5 JUMP JUMPDEST SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x0 DUP2 SWAP1 POP SWAP2 SWAP1 POP JUMP JUMPDEST PUSH1 0xEC DUP2 PUSH1 0xDB JUMP JUMPDEST DUP2 EQ PUSH1 0xF6 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP JUMP INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 SWAP15 LOG4 SGT 0xB3 0x23 SMOD REVERT 0xCB DUP1 ISZERO SAR 0x5C STATICCALL PUSH21 0x49EE6CE6FD9F0B5A5CAE9CBE9FE3944F97EF64736F PUSH13 0x63430008040033000000000000 ",
+          sourceMap: "141:356:0:-:0;;;;;;;;;;;;;;;;;;;",
+        },
+      });
+      console.log(contract)
+
+      // .then(function(receipt){
+      //     console.log(receipt)
+      //   });
 
       // web3.eth.sendTransaction({
       //   from: `${accounts}`,
-      //   to: `0xE09B9154dDA29d69f8FC3F2C289B453dD846f16f`,
+      //   to: `0xD600d591216DAF658f43BDA5a93e58B37008bAEf`,
       //   value: '1000000000000000000',
       //   gasPrice:'20000000000',
       //   // nonce: "5",
@@ -102,28 +115,21 @@ export default function launchpad() {
       //   console.log(receipt)
       // });
 
-      var myContract = new web3.eth.Contract([...], '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe', {
-        from: '0x1234567890123456789012345678901234567891', // default from address
-        gasPrice: '20000000000' // default gas price in wei, 20 gwei in this case
-    });
-
-
-      web3.eth.getBalance(`${accounts}`,function(error,result){
-        if(error){
-           console.log(error)
-        }
-        else{
-           setEthBalance(web3.utils.fromWei(result, 'ether'))
+      web3.eth.getBalance(`${accounts}`, function (error, result) {
+        if (error) {
+          console.log(error);
+        } else {
+          setEthBalance(web3.utils.fromWei(result, "ether"));
           //  console.log(result)
         }
-     })
+      });
     } catch (error) {
       alert(
         `Failed to load web3, accounts, or contract. Check console for details.`
-      )
-      console.log(error)
+      );
+      console.log(error);
     }
-};
+  };
 
   return (
     <div className={classes.root}>
@@ -134,7 +140,7 @@ export default function launchpad() {
         >
           Launchpad
         </h1>
-        <h2>Balance - {ethBalance} </h2>
+        <h2>Balance - {ethBalance} ETH </h2>
         <Paper elevation={3} style={{ margin: 40 }}>
           <Container>
             <h2>*Please Read*</h2>

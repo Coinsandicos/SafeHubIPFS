@@ -36,7 +36,7 @@ module.exports = async function(deployer, network, accounts) {
   const _releaseTime    = _closingTime + duration.minutes(10);
 
   await deployer.deploy(
-    DappTokenCrowdsale,
+    SafeHubPresale,
     _rate,
     _wallet,
     _token,
