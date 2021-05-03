@@ -32,7 +32,7 @@ module.exports = {
       port: 8545,
       gas: 4600000,
       gasPrice: 2500000000,
-      network_id: "*", // Match any network id
+      network_id: "5778", // Match any network id
     },
     ropsten: {
       // provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/${infuraApiKey}`),

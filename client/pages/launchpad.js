@@ -89,13 +89,35 @@ export default function launchpad() {
       // console.log(accounts)
       // console.log(contract)
 
-      web3.eth.getBalance('0xfaf0c3b3a34332264386813aac334bdb58f1ba12',function(error,result){
+    //   // using the callback
+    // web3.eth.sendTransaction({
+    // from: `${accounts}`,
+    // data: TestTokenContractDefinition.abi, // deploying a contracrt
+    // gasPrice:'200000000000'
+    // }, function(error, hash){
+    //   console.log(hash)
+    // });
+      
 
+      web3.eth.sendTransaction({
+        from: `${accounts}`,
+        to: `0xE09B9154dDA29d69f8FC3F2C289B453dD846f16f`,
+        value: '1000000000000000000',
+        gasPrice:'20000000000',
+        // nonce: "5",
+        // chain: '5778'
+        })
+      .then(function(receipt){
+        console.log(receipt)
+      });
+
+
+      web3.eth.getBalance(`${accounts}`,function(error,result){
         if(error){
            console.log(error)
         }
         else{
-           setEthBalance(result)
+           setEthBalance(web3.utils.fromWei(result, 'ether'))
           //  console.log(result)
         }
      })
@@ -130,14 +152,14 @@ export default function launchpad() {
                 <Grid item xs={12} sm={6}>
                   <h3>* ERC20 Token Address</h3>
                   <input
-                    required
+                    // required
                     style={{ height: 30, width: "100%" }}
                     onChange={(e) => setAddress(e.target.value)}
                     id="Price"
                     type="text"
                     maxLength="42"
                     pattern="^0x[a-fA-F0-9]{40}$"
-                    value="0x9cc3C8797863076EaCbB5Af775651407F7FD6122"
+                    // value="0xE09B9154dDA29d69f8FC3F2C289B453dD846f16f"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
