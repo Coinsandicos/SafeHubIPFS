@@ -66,7 +66,7 @@ export default function launchpad() {
 
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(async () => {
-   const newWeb3 = new Web3('https://mainnet.infura.io/v3/3d2818b6dda74d9780543605a2a50ae4')
+   const newWeb3 = new Web3('https://mainnet.infura.io/v3/Insert API Key Here...')
    const web3 = await getWeb3();
    const abiData = abi
    const contractAddress = '0xcD76d39B8979A4025C09dfAD9161C83cD21234b2'
