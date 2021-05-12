@@ -37,7 +37,7 @@ module.exports = {
       network_id: "5778", // Match any network id
     },
     ropsten: {
-      provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/${infuraApiKey}`),
+      // provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/${infuraApiKey}`),
       network_id: 3, // Ropsten's id
       gas: 5500000, // Ropsten has a lower block limit than mainnet
       // confirmations: 2,    // # of confs to wait between deployments. (default: 0)
@@ -82,7 +82,7 @@ module.exports = {
           enabled: false,
           runs: 200,
         },
-        evmVersion: "byzantium",
+        evmVersion: "petersburg",
       },
     },
   },
