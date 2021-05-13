@@ -21,5 +21,10 @@ export default () => (
         <a>Presale</a>
       </Link>
     </div>
+    <div>
+      <Link href="/auth">
+        <a>Auth</a>
+      </Link>
+    </div>
   </div>
 );
