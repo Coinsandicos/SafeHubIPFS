@@ -16,5 +16,10 @@ export default () => (
         <a>Launchpad</a>
       </Link>
     </div>
+    <div>
+      <Link href="/presale">
+        <a>Presale</a>
+      </Link>
+    </div>
   </div>
 );
