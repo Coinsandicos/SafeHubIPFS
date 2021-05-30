@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
     "buffer": "^6.0.3",
     "ethereumjs-tx": "^2.1.2",
     "next": "^10.1.3",
